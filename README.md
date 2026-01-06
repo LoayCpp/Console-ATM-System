@@ -11,7 +11,6 @@ A console-based **ATM Banking System** built in **C++**, simulating real ATM ope
 - [📂 Data Storage Format](#-data-storage-format)
 - [📷 Screenshots](#-screenshots)
 - [🧠 What I Learned](#-what-i-learned)
-- [📌 Notes](#-notes)
 - [👤 Developer ](#-developer)
 
 ---
@@ -113,13 +112,6 @@ It allows the user to verify funds after any transaction.
 
 ---
 
-## 📌 Notes
-- Create a folder named `screenshots` and place all project images inside it.  
-- Make sure the image names in the folder match the links used in this document (e.g., `login.png`, `main-menu.png`).  
-- When running the project on a new machine, ensure the text data file (database) exists with the correct format.  
-- Make sure the data file is readable and writable so that balances are updated after each transaction.  
-
----
 
 ## 🧠 What I Learned
 
