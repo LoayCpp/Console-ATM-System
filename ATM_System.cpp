@@ -8,7 +8,7 @@
 #include<iomanip>
 #include<cstdlib>
 using namespace std;
-enum enTransaction{enQuickWithdrow=1,enNormalWithdraw=2,enDeposit=3,enCheckBalance=4,enLogout=5};
+enum enTransaction{enQuickWithdrow=1,enNormalWithdraw=2,enDeposit=3,enCheckBalance=4,enChangePassword=5,enLogout=6};
 enum enQuickWithdrowChosse { enTwenty = 1, enFifty = 2, enOneHundred = 3, enTwoHundred = 4, enFourHundred = 5, enSixHundred = 6, enEightHundred = 7, enOneThousand = 8, enExit = 9 };
 
 const string FileClient = "ClientFile.txt";
@@ -27,6 +27,7 @@ void ShowAtmMainMenue();
 void loginClient();
 void QuickWithdrowScreen();
 void NormalWithdrawScreen();
+void ChangePasswordClientScreen();
 string space(short num) {
     string s = "";
     for (short i = 0; i <= num; i++)
@@ -185,9 +186,9 @@ void CheckBalanceScreen() {
 
 
 }
-bool CheckValueLessThanTheBalance(float balance) {
+bool CheckValueLessThanTheBalance(float Value) {
 
-    return (balance <= CurrentClient.countbalance);
+    return (Value <= CurrentClient.countbalance);
 
 }
 void  MessageCheckBalance() {
@@ -436,6 +437,11 @@ void PerfromTransaction(enTransaction choose) {
         GoToAtmMenue();
         
         break;
+    case enTransaction::enChangePassword:
+        system("cls");
+        ChangePasswordClientScreen();
+        GoToAtmMenue();
+        break;
     case enTransaction::enLogout:
         system("cls");
         loginClient();
@@ -460,7 +466,9 @@ void ShowAtmMainMenue() {
     cout << space(4) << "[2] Normal Withdraw \n";
     cout << space(4) << "[3] Deposit \n";
     cout << space(4) << "[4] Check Balance  \n";
-    cout << space(4) << "[5] Logout  \n";
+    cout << space(4) << "[5] Change Password  \n";
+    cout << space(4) << "[6] Logout  \n";
+
     
     cout << "================================================================================================\n";
    
@@ -490,6 +498,93 @@ bool LoadClientInfo(string account, string pincode) {
     return CheckIAccountAndPincodeInFile(account, pincode, CurrentClient);
 
 }
+
+string ReadPassword(string message) {
+    string pass="";
+    cout << message;
+    getline(cin >> ws,pass);
+
+
+    return pass;
+
+
+}
+bool ArePasswordsEqual(string currentpassword, string newpassword) {
+
+    return (currentpassword == newpassword);
+
+}
+void ChangePasswordInfile(string account, string pincode, vector<stinfo>& Vclient) {
+    char ch = 'y';
+    cout << "do you want to write in file:(y/n):";
+    cin >> ch;
+    if (tolower(ch) == 'y') {
+        for (stinfo& C : Vclient) {
+            if (C.account == account) {
+
+                C.pincode = pincode;
+                loadVectorTofile(Vclient);
+                cout << "Done Successfuly,Change Password :-)";
+                return;
+            }
+
+
+
+        }
+
+    }
+    return;
+
+
+
+}
+void VerifyAndRetryPassword(const string& correctPassword, string& enteredPassword, string message) {
+    short count = 0;
+    bool notfound = true;
+    do {
+        enteredPassword = ReadPassword(message);
+        (!ArePasswordsEqual(correctPassword, enteredPassword)) ? count++ : notfound = false;
+        if (count == 3) {
+            cout << "You have attempted 3 times. Please try again later\n";
+            GoToAtmMenue();
+        }
+
+    } while (notfound);
+
+
+
+}
+void PerformanceChangePasswordClient() {
+
+    string newpassword, oldpassword,renewpassword;
+    short count = 0;
+    bool notfound = true;  
+
+    VerifyAndRetryPassword(CurrentClient.pincode, oldpassword, "Enter the current password:");
+   
+
+    newpassword = ReadPassword("Enter the new password :");
+    VerifyAndRetryPassword(newpassword, renewpassword, "Re - enter the new password:");
+
+    vector<stinfo>Vclient = loadfromfile(FileClient);
+    ChangePasswordInfile(CurrentClient.account, newpassword, Vclient);
+    CurrentClient.pincode = newpassword;
+
+}
+void ChangePasswordClientScreen() {
+
+    system("cls");
+    cout << "================================================================================================\n";
+    cout << space(4) << " Change Password Screen \n";
+    cout << "================================================================================================\n";
+    PerformanceChangePasswordClient();
+
+
+}
+
+
+
+
 
 void loginClient() {
 
