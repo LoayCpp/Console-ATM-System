@@ -169,10 +169,10 @@ void GoToTransactoinMenue() {
 
 
 }
-void ClientBalance() {
+void ClientBalance(string Message) {
 
-
-    cout << "Your Balance is " << CurrentClient.countbalance << endl;
+    
+    cout << "Your Balance "<<Message << CurrentClient.countbalance << endl;
 
 
 }
@@ -181,7 +181,7 @@ void CheckBalanceScreen() {
     cout << "================================================================================================\n";
     cout << space(4) << "Check Balance Screen \n";
     cout << "================================================================================================\n";
-    ClientBalance();
+    ClientBalance("Now is ");
 
 
 }
@@ -332,7 +332,7 @@ void QuickWithdrowScreen() {
     cout <<space(4) <<"\t[7] 800 \t\t [8]1000\n";
     cout <<space(4) << "\t[9] Exit\n";
     cout << "================================================================================================\n";
-    ClientBalance();
+    ClientBalance("Before Withdraw :");
     PerformQuickWitdrow(enQuickWithdrowChosse(ReadNumberInQuickWithdraw()));
    
 
@@ -368,9 +368,9 @@ void DepositScreen() {
     cout << "==========================================================\n";
     cout << space(1) << "Deposit Screen\n";
     cout << "==========================================================\n";
-  
+    ClientBalance("Before Deposit is :");
     PerformanceDeposit();
-
+   
 
 
 }
@@ -402,9 +402,9 @@ void NormalWithdrawScreen() {
     cout << "==========================================================\n";
     cout << space(1) << "Normal Withdraw\n";
     cout << "==========================================================\n";
-  
+    ClientBalance("Before Normal Withdrow is :");
     PerformanceNormalWithdraw();
-    
+   
 
 
 
