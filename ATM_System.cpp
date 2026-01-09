@@ -562,8 +562,12 @@ void PerformanceChangePasswordClient() {
 
     VerifyAndRetryPassword(CurrentClient.pincode, oldpassword, "Enter the current password:");
    
+    do {
+        newpassword = ReadPassword("Enter the new password :");
+    } while (ArePasswordsEqual(oldpassword, newpassword));
 
-    newpassword = ReadPassword("Enter the new password :");
+
+      
     VerifyAndRetryPassword(newpassword, renewpassword, "Re - enter the new password:");
 
     vector<stinfo>Vclient = loadfromfile(FileClient);
